@@ -56,7 +56,6 @@ function simulate(strategyType: StrategyType, maxIterations: number) {
             results.loss = results.loss + 1;
         }
     }
-    console.log("Simula", strategyType, results)
 
     return results;
 }

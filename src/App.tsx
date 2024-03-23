@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import './App.css';
 import simulate from './service/simulator';
+import { StrategyType } from './types';
 
 function renderResults(results: { wins: number; loss: number }, maxIterations: number) {
   return [
@@ -22,7 +23,6 @@ function App() {
 
     setSwitchResults(simulate("switch", maxIterations))
     setNoSwitchResults(simulate("don't switch", maxIterations))
-    console.log({ maxIterations, switchResults, noSwitchResults })
   }
 
   return (
@@ -37,21 +37,26 @@ function App() {
       </div>
 
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div className="simulation">Switching after door reveal
-          <div >
-            {renderResults(switchResults, switchResults.maxIterations)}
-            <div>Percentage wins: {(switchResults.wins / switchResults.maxIterations) * 100}</div>
-          </div>
-        </div>
-        <div className="simulation">Without Switching after door reveal
-          <div>
-            {renderResults(noSwitchResults, noSwitchResults.maxIterations)}
-            <div>Percentage wins: {(noSwitchResults.wins / noSwitchResults.maxIterations) * 100}</div>
-          </div>
-        </div>
+        <SimulationOutput type='switch' results={switchResults} />
+        <SimulationOutput type="don't switch" results={noSwitchResults} />
       </div>
     </div>
   );
+}
+
+function SimulationOutput(props: {
+  type: StrategyType
+  results: { wins: number, loss: number, maxIterations: number }
+}) {
+  const { type, results } = props;
+
+  return <div className="simulation">
+    {type === "switch" ? "Switching after door reveal" : "Without Switching after door reveal"}
+    <div >
+      {renderResults(results, results.maxIterations)}
+      <div style={{ color: 'black' }}>Percentage wins: {(results.wins / results.maxIterations) * 100}</div>
+    </div>
+  </div>
 }
 
 export default App;
