@@ -16,11 +16,19 @@ function getRevealedDoor(chosenIndex: number) {
     return 3 - chosenIndex
 }
 
-function getRemainingDoor(chosenDoor: number, revealedDoor: number) {
-    return [0, 1, 2].filter(x => ![chosenDoor, revealedDoor].includes(x))[0]
+function getRevealedDoorRandomly(chosenIndex: number) {
+    // Reveal a door randomly from non chosen doors
+    return getRandomElement(Array.from(DOOR_OPTIONS.keys()).filter(x => chosenIndex !== x))
 }
 
-function simulate(strategyType: StrategyType, maxIterations: number) {
+function getRemainingDoor(chosenDoor: number, revealedDoor: number) {
+    const indexesToExclude = [chosenDoor, revealedDoor];
+
+    return Array.from(DOOR_OPTIONS.keys()).filter(x => !indexesToExclude.includes(x))[0]
+}
+
+function simulate(options: { strategyType: StrategyType, maxIterations: number, randomizeRevealedDoor?: boolean }) {
+    const { strategyType, maxIterations, randomizeRevealedDoor } = options
     const results = {
         wins: 0,
         loss: 0,
@@ -31,7 +39,7 @@ function simulate(strategyType: StrategyType, maxIterations: number) {
         // Pick a random door index from the array
         let chosenDoor = Math.floor(Math.random() * DOOR_OPTIONS.length)
 
-        const revealedDoor = getRevealedDoor(chosenDoor);
+        const revealedDoor = randomizeRevealedDoor ? getRevealedDoorRandomly(chosenDoor) : getRevealedDoor(chosenDoor);
 
         switch (strategyType) {
             case "switch":
@@ -51,9 +59,9 @@ function simulate(strategyType: StrategyType, maxIterations: number) {
         const choice = DOOR_OPTIONS[chosenDoor];
 
         if (choice === "gold") {
-            results.wins = results.wins + 1;
+            results.wins += 1;
         } else {
-            results.loss = results.loss + 1;
+            results.loss += 1;
         }
     }
 

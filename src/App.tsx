@@ -14,15 +14,16 @@ function renderResults(results: { wins: number; loss: number }, maxIterations: n
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const randomizeRef = useRef<HTMLInputElement>(null);
 
   const [switchResults, setSwitchResults] = useState({ wins: 0, loss: 0, maxIterations: 0 });
   const [noSwitchResults, setNoSwitchResults] = useState({ wins: 0, loss: 0, maxIterations: 0 });
 
   const startSimulation = () => {
     const maxIterations = Number(inputRef.current?.value) || 1000;
-
-    setSwitchResults(simulate("switch", maxIterations))
-    setNoSwitchResults(simulate("don't switch", maxIterations))
+    const randomizeRevealedDoor = randomizeRef.current?.checked;
+    setSwitchResults(simulate({ strategyType: "switch", maxIterations, randomizeRevealedDoor }))
+    setNoSwitchResults(simulate({ strategyType: "don't switch", maxIterations, randomizeRevealedDoor }))
   }
 
   return (
@@ -32,7 +33,10 @@ function App() {
       </header>
       <div className='input-block'>
         <label htmlFor="iterations">Max iterations: </label>
-        <input ref={inputRef} type="number" name="iterations" id="iterations" defaultValue={1000} />&nbsp;
+        <input ref={inputRef} type="number" name="iterations" id="iterations" defaultValue={1000} />&nbsp;&nbsp;&nbsp;
+
+        <label htmlFor="randomize" title="If the revealed door is randomized the advantage of switching is nullified" >Randomize revealed door: </label>
+        <input ref={randomizeRef} type="checkbox" name="randomize" id="randomize" title="If the revealed door is randomized the advantage of switching is nullified" />&nbsp;
         <button onClick={startSimulation}>Simulate</button>
       </div>
 
