@@ -1,14 +1,18 @@
 import { useRef, useState } from 'react';
-import './App.css';
-import simulate from './service/simulator';
+
 import { StrategyType } from './types';
+import simulate from './service/simulator';
+
+import './App.css';
 
 function renderResults(results: { wins: number; loss: number }, maxIterations: number) {
+  const NORMALIZE_TO = 1800;
+
   return [
-    ...Array.from({ length: Math.floor((results.wins / maxIterations) * 2000) })
-      .map((_, idx) => <span key={`win-${idx}`} style={{ color: "black" }} >🀫</span>),
-    ...Array.from({ length: Math.floor((results.loss / maxIterations) * 2000) })
-      .map((_, idx) => <span key={`loss-${idx}`} style={{ color: "black" }} >🀆</span>)
+    ...Array.from({ length: Math.floor((results.wins / maxIterations) * NORMALIZE_TO) })
+      .map((_, idx) => <span key={`win-${idx}`} style={{ color: "black" }} >🏆</span>),
+    ...Array.from({ length: Math.floor((results.loss / maxIterations) * NORMALIZE_TO) })
+      .map((_, idx) => <span key={`loss-${idx}`} style={{ color: "black" }} >🐐</span>)
   ]
 }
 
