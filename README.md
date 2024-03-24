@@ -26,6 +26,6 @@ To demonstrate how switching or not switching your first pick in the Monty Hall 
 
   ![1000000 iterations](<Screenshot 2024-03-24 at 05.30.41.png>)
 
-3. Results with 1000 iterations and with ramdomization:
+3. Results with 1000000 iterations and with ramdomization:
 
   ![1000000 iterations with randomization](<Screenshot 2024-03-24 at 05.31.54.png>)
