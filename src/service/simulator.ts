@@ -1,4 +1,4 @@
-import { StrategyType } from "../types";
+import { ResultType, StrategyType } from "../types";
 
 const DOOR_OPTIONS = ["gold", "goat", "goat"];
 
@@ -29,10 +29,11 @@ function getRemainingDoor(chosenDoor: number, revealedDoor: number) {
 
 function simulate(options: { strategyType: StrategyType, maxIterations: number, randomizeRevealedDoor?: boolean }) {
     const { strategyType, maxIterations, randomizeRevealedDoor } = options
-    const results = {
+    const results: ResultType = {
         wins: 0,
         loss: 0,
         maxIterations,
+        iterationLog: new Map()
     }
 
     for (let gameInstance = 1; gameInstance <= maxIterations; gameInstance++) {
@@ -63,6 +64,7 @@ function simulate(options: { strategyType: StrategyType, maxIterations: number, 
         } else {
             results.loss += 1;
         }
+        results.iterationLog.set(gameInstance, (results.wins / gameInstance) * 100)
     }
 
     return results;

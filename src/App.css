@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #8693ad;
+  background-color: #c5d3ef;
   height: 100vh;
 }
 
@@ -17,7 +17,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
   /* border-bottom: black solid 1px; */
 }
 
@@ -32,8 +31,7 @@
 }
 
 .simulation {
-  color: white;
-  background-color: #70b9c2;
+  background-color: #7bdca2;
   padding: 15px;
   width: 45vw;
   height: 85vh;
@@ -47,5 +45,4 @@
 
 .input-block {
   height: 4vh;
-  color: white
 }
